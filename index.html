@@ -93,6 +93,7 @@
 			<footer class="chat-footer">
 				<textarea class="send-message" placeholder="Enter Message" rows="1"></textarea>
 				<a href="#" class="smiles show-list"><img src="images/smile.png" alt="smile"></a>
+				<button onclick="sendMesage()" class="btn btn-warning btn-sm" id="btn-chat" >Send</button>
 			</footer>
 		</div>
 		
@@ -114,6 +115,22 @@
 			<source src="audio/ring.mp3"></source>
 		</audio>
 	</div>
+	
+	<script type="text/javascript">
+		function sendMesage() {
+			var post = $('.send-message');
+			if (!trim(post.val())) {
+				post.addClass('error');
+			}
+			else {
+				post.removeClass('error');
+				var message = {message: post.val(), avatar: avatarLink};
+				connection.muc.groupchat(CHAT.roomJID, Strophe.escapeNode(JSON.stringify(message)));
+				post.val('');
+			}
+		}
+		
+	</script>
 	
 	<script src="js/libs/quickblox.js"></script>
 	<script src="js/libs/strophe.js"></script>
